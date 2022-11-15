@@ -14,7 +14,6 @@ public class Dragon {
     private String name;
     private String alias;
     private String sex;
-
     private String appearance;
     private boolean isAlive;
     private String dateOfBirth;
