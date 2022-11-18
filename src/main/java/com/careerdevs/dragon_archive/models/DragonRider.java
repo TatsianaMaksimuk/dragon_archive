@@ -1,12 +1,14 @@
 package com.careerdevs.dragon_archive.models;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import javax.persistence.*;
 
 @Entity
 public class DragonRider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
     private String house;
@@ -15,6 +17,19 @@ public class DragonRider {
     private String placeOfBirth;
     private boolean isAlive;
     private String dateOfDeath;
+
+    public Dragon getDragon() {
+        return dragon;
+    }
+
+    public void setDragon(Dragon dragon) {
+        this.dragon = dragon;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "dragon_id", referencedColumnName = "id")
+    @JsonIncludeProperties({"id", "name"})
+    private Dragon dragon;
 
 
     public DragonRider() {
@@ -33,7 +48,7 @@ public class DragonRider {
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -66,7 +81,7 @@ public class DragonRider {
     }
 
     //setters
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

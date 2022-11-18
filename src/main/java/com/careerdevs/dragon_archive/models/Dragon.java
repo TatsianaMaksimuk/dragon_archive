@@ -1,16 +1,16 @@
 package com.careerdevs.dragon_archive.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Dragon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
     private String alias;
     private String sex;
@@ -20,6 +20,11 @@ public class Dragon {
     private String placeOfBirth;
     private String dateOfDeath;
     private String placeOfDeath;
+
+
+    @OneToMany(mappedBy = "dragon", fetch = FetchType.LAZY)
+    @JsonIncludeProperties({"name", "house"})
+    private List<DragonRider> dragonRider;
 
 
     public Dragon() {
@@ -39,12 +44,17 @@ public class Dragon {
     }
 
 
+    public List<DragonRider> getDragonRider() {
+        return dragonRider;
+    }
+
+
     //getters
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -81,7 +91,7 @@ public class Dragon {
     }
 
     //Setters
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -119,6 +129,10 @@ public class Dragon {
 
     public void setPlaceOfDeath(String placeOfDeath) {
         this.placeOfDeath = placeOfDeath;
+    }
+
+    public void setDragonRider(List<DragonRider> dragonRider) {
+        this.dragonRider = dragonRider;
     }
 
 }
