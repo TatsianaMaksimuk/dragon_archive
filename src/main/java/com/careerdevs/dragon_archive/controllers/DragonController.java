@@ -38,7 +38,7 @@ public class DragonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getDragonById(@PathVariable int id) {
+    public ResponseEntity<?> getDragonById(@PathVariable Integer id) {
         Optional<Dragon> requestedDragon = dragonsRepository.findById(id); //optional is for db (I try to find in db but if I don't optional will have that info (id is null f.e.)
         if (requestedDragon.isEmpty()) {
             return new ResponseEntity<>("Dragon not found", HttpStatus.NOT_FOUND);
@@ -46,8 +46,10 @@ public class DragonController {
         return new ResponseEntity<>(requestedDragon.get(), HttpStatus.OK);
     }
 
+
+    //update
     @PostMapping("/{id}")
-    public ResponseEntity<?> postOneDragonById(@PathVariable int id, @RequestBody Dragon newDragonData) {
+    public ResponseEntity<?> postOneDragonById(@PathVariable Integer id, @RequestBody Dragon newDragonData) {
         Dragon requestedDragon = dragonsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         if (!newDragonData.getName().equals("")) {
             requestedDragon.setName(newDragonData.getName());
@@ -80,16 +82,16 @@ public class DragonController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteDragonById(@PathVariable int id){
-        Dragon requestedDragon = dragonsRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ResponseEntity<?> deleteDragonById(@PathVariable Integer id) {
+        Dragon requestedDragon = dragonsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         dragonsRepository.deleteById(id);
         return ResponseEntity.ok(requestedDragon);
     }
 
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<?> findDragonByName(@PathVariable String name){
-        Dragon requestedDragon = dragonsRepository.findDragonByName(name).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ResponseEntity<?> findDragonByName(@PathVariable String name) {
+        Dragon requestedDragon = dragonsRepository.findDragonByName(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return new ResponseEntity<>(requestedDragon, HttpStatus.OK);
     }
 
