@@ -24,8 +24,15 @@ public class DragonRiderController {
     @Autowired
     private DragonRidersRepository dragonRidersRepository;
 
+    @PostMapping("/")
+    public ResponseEntity<?> addOneDragonRiderToDB(@RequestBody DragonRider newRiderData){
+        DragonRider addedRider = dragonRidersRepository.save(newRiderData);
+        return new ResponseEntity<>(addedRider, HttpStatus.CREATED);
+    }
+
+
     @PostMapping("{dragonId}")
-    public ResponseEntity<?> addDragonRiderTooDB(@RequestBody DragonRider newRiderData, @PathVariable Integer dragonId) {
+    public ResponseEntity<?> addDragonRiderTooExistingDragonDB(@RequestBody DragonRider newRiderData, @PathVariable Integer dragonId) {
         //Find Dragon by id
         //return bad request if dragon does not exist
         //if exists - add rider
